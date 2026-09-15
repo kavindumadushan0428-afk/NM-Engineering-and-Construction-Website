@@ -1,0 +1,13 @@
+﻿src/components/three/HouseModel.tsx(3,26): error TS2307: Cannot find module '@react-three/fiber' or its corresponding type declarations.
+src/components/three/HouseModel.tsx(4,31): error TS2307: Cannot find module '@react-three/drei' or its corresponding type declarations.
+src/components/three/HouseModel.tsx(6,24): error TS2307: Cannot find module 'three' or its corresponding type declarations.
+src/components/three/HouseModel.tsx(26,25): error TS7006: Parameter 'child' implicitly has an 'any' type.
+src/components/three/HouseModel.tsx(63,15): error TS7006: Parameter 'state' implicitly has an 'any' type.
+src/components/three/HouseModel.tsx(63,22): error TS7006: Parameter 'delta' implicitly has an 'any' type.
+src/components/three/HouseModel.tsx(132,9): error TS2339: Property 'group' does not exist on type 'JSX.IntrinsicElements'.
+src/components/three/HouseModel.tsx(133,13): error TS2339: Property 'primitive' does not exist on type 'JSX.IntrinsicElements'.
+src/components/three/HouseModel.tsx(144,9): error TS2339: Property 'group' does not exist on type 'JSX.IntrinsicElements'.
+src/components/three/HouseScene.tsx(3,24): error TS2307: Cannot find module '@react-three/fiber' or its corresponding type declarations.
+src/components/three/HouseScene.tsx(4,45): error TS2307: Cannot find module '@react-three/drei' or its corresponding type declarations.
+src/components/three/HouseScene.tsx(33,21): error TS2339: Property 'ambientLight' does not exist on type 'JSX.IntrinsicElements'.
+src/components/three/HouseScene.tsx(34,21): error TS2339: Property 'directionalLight' does not exist on type 'JSX.IntrinsicElements'.

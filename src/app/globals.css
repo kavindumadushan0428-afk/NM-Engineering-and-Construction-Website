@@ -1,0 +1,280 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fdfdfc;
+  /* Exquisite warm ultra-white */
+  --foreground: #111111;
+
+  /* $10,000 Premium Glass Spec */
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.90);
+  --glass-shadow: 0 16px 48px -12px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  --glass-blur: 40px;
+
+  /* Precision Easing */
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+}
+
+/* ── Clean corporate background ──────────────────────────── */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  position: relative;
+  /* Smoother text rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 
+  Studio Light Diffractors
+  Creates extreme, ultra-soft macro gradients in the background. 
+  They are virtually invisible outside of glass cards, but provide stunning refraction when a frosted acrylic element hovers over them.
+*/
+body::before,
+body::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(150px);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+body::before {
+  top: 10%;
+  left: -10%;
+  width: 60vw;
+  height: 60vh;
+  background: radial-gradient(circle, rgba(248, 250, 252, 1) 0%, rgba(248, 250, 252, 0) 70%);
+  /* slate-50 warmth */
+}
+
+body::after {
+  top: 40%;
+  right: -5%;
+  width: 70vw;
+  height: 80vh;
+  background: radial-gradient(circle, rgba(254, 242, 242, 0.8) 0%, rgba(254, 242, 242, 0) 70%);
+  /* ultra soft red-50 glow */
+}
+
+/* ── Smooth scrolling + reset ──────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Typography Scale Overrides ──────────────────────────── */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: fade-in-up 500ms var(--ease-spring) both;
+}
+
+/* ── Scroll reveal ─────────────────────────────────────────── */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-up {
+  animation: reveal-up 600ms var(--ease-spring) both;
+}
+
+/* Staggered reveal helper — add delay-[Xms] alongside reveal-up */
+.reveal-up.stagger-1 {
+  animation-delay: 80ms;
+}
+
+.reveal-up.stagger-2 {
+  animation-delay: 160ms;
+}
+
+.reveal-up.stagger-3 {
+  animation-delay: 240ms;
+}
+
+.reveal-up.stagger-4 {
+  animation-delay: 320ms;
+}
+
+/* ── Smooth hover lift — apply to any interactive card ──────── */
+.hover-lift {
+  transition:
+    transform 300ms var(--ease-spring),
+    box-shadow 300ms var(--ease-spring),
+    border-color 200ms var(--ease-out-quad),
+    background-color 200ms var(--ease-out-quad);
+  will-change: transform;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.10);
+}
+
+.hover-lift:active {
+  transform: translateY(-1px) scale(0.99);
+  transition-duration: 100ms;
+}
+
+/* ── Button spring press ────────────────────────────────────── */
+.btn-spring {
+  transition:
+    transform 200ms var(--ease-spring),
+    box-shadow 200ms var(--ease-spring),
+    background-color 180ms var(--ease-out-quad),
+    color 180ms var(--ease-out-quad);
+  will-change: transform;
+}
+
+.btn-spring:hover {
+  transform: translateY(-2px);
+}
+
+.btn-spring:active {
+  transform: scale(0.97);
+  transition-duration: 80ms;
+}
+
+/* ── Fade scale in (for badges, tooltips) ───────────────────── */
+@keyframes fade-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-scale-in {
+  animation: fade-scale-in 300ms var(--ease-spring) both;
+}
+
+/* ── Pulse glow (e.g. live dot) ─────────────────────────────── */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.55;
+    transform: scale(1.35);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s var(--ease-out-quad) infinite;
+}
+
+/* ── Shimmer (glass card hover accent) ──────────────────────── */
+@keyframes shimmer {
+  from {
+    background-position: -200% center;
+  }
+
+  to {
+    background-position: 200% center;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.8) 50%,
+      transparent 100%);
+  background-size: 200% auto;
+  animation: shimmer 2.4s var(--ease-out-quad) infinite;
+}
+
+/* ── Countdown digit flip ───────────────────────────────────── */
+@keyframes digit-flip {
+  from {
+    transform: translateY(-30%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-digit-flip {
+  animation: digit-flip 250ms var(--ease-spring) both;
+}
+
+/* ── Process step line ──────────────────────────────────────── */
+.process-line::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -50%;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, #d4d4d4, transparent);
+}
+
+/* ── Ultimate Premium Glass utilities ──────────────────────── */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(var(--glass-blur)) saturate(200%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(200%);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 1);
+  box-shadow: 0 20px 60px -16px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1);
+  backdrop-filter: blur(48px) saturate(220%);
+  -webkit-backdrop-filter: blur(48px) saturate(220%);
+}
+
+/* ── Hide next.js overlay ───────────────────────────────────── */
+nextjs-portal {
+  display: none !important;
+}

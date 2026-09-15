@@ -1,0 +1,340 @@
+﻿
+> nm@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.3.1 (Turbopack)
+Γ£ô Running next.config.ts took 24ms
+
+  Creating an optimized production build ...
+node.exe : 
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
+    + CategoryInfo           
+   : NotSpecified: (:String  
+  ) [], RemoteException
+    + FullyQualifiedErrorId  
+   : NativeCommandError
+ 
+> Build error occurred
+Error: Turbopack build 
+failed with 5 errors:
+./src/components/three/HouseM
+odel.tsx:4:1
+Error: Module not found: 
+Can't resolve 
+'@react-three/drei'
+  [90m2 |[0m
+  [90m3 |[0m 
+[36mimport[0m { useFrame } 
+[36mfrom[0m [32m"@react-th
+ree/fiber"[0m;
+[31m[1m>[0m [90m4 |[0m 
+[36mimport[0m { useGLTF, 
+[33mHtml[0m } 
+[36mfrom[0m 
+[32m"@react-three/drei"[0m;
+  [90m  |[0m [31m[1m^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^[0m
+  [90m5 |[0m 
+[36mimport[0m { useRef, 
+useMemo, useEffect, useState 
+} [36mfrom[0m 
+[32m"react"[0m;
+  [90m6 |[0m 
+[36mimport[0m * 
+[36mas[0m [33mTHREE[0m 
+[36mfrom[0m 
+[32m"three"[0m;
+  [90m7 |[0m
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/components/three/Ho
+useModel.tsx [Client 
+Component Browser]
+    ./src/components/three/Ho
+useScene.tsx [Client 
+Component Browser]
+    ./src/components/three/Sc
+rollHouseExperience.tsx 
+[Client Component Browser]
+    ./src/components/three/Sc
+rollHouseExperience.tsx 
+[Server Component]
+    ./src/components/sections
+/ThreeDTeaser.tsx [Server 
+Component]
+    ./src/app/page.tsx 
+[Server Component]
+
+https://nextjs.org/docs/messa
+ges/module-not-found
+
+
+./src/components/three/HouseS
+cene.tsx:4:1
+Error: Module not found: 
+Can't resolve 
+'@react-three/drei'
+  [90m2 |[0m
+  [90m3 |[0m 
+[36mimport[0m { 
+[33mCanvas[0m } 
+[36mfrom[0m [32m"@react-th
+ree/fiber"[0m;
+[31m[1m>[0m [90m4 |[0m 
+[36mimport[0m { 
+[33mEnvironment[0m, 
+[33mContactShadows[0m } 
+[36mfrom[0m 
+[32m"@react-three/drei"[0m;
+  [90m  |[0m [31m[1m^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^[0m
+  [90m5 |[0m 
+[36mimport[0m { 
+[33mSuspense[0m, 
+useEffect, useState } 
+[36mfrom[0m 
+[32m"react"[0m;
+  [90m6 |[0m 
+[36mimport[0m 
+[33mHouseModel[0m 
+[36mfrom[0m 
+[32m"./HouseModel"[0m;
+  [90m7 |[0m
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/components/three/Ho
+useScene.tsx [Client 
+Component Browser]
+    ./src/components/three/Sc
+rollHouseExperience.tsx 
+[Client Component Browser]
+    ./src/components/three/Sc
+rollHouseExperience.tsx 
+[Server Component]
+    ./src/components/sections
+/ThreeDTeaser.tsx [Server 
+Component]
+    ./src/app/page.tsx 
+[Server Component]
+
+https://nextjs.org/docs/messa
+ges/module-not-found
+
+
+./src/components/three/HouseM
+odel.tsx:3:1
+Error: Module not found: 
+Can't resolve 
+'@react-three/fiber'
+  [90m1 |[0m [32m"use 
+client"[0m;
+  [90m2 |[0m
+[31m[1m>[0m [90m3 |[0m 
+[36mimport[0m { useFrame } 
+[36mfrom[0m [32m"@react-th
+ree/fiber"[0m;
+  [90m  |[0m [31m[1m^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^[0m
+  [90m4 |[0m 
+[36mimport[0m { useGLTF, 
+[33mHtml[0m } 
+[36mfrom[0m 
+[32m"@react-three/drei"[0m;
+  [90m5 |[0m 
+[36mimport[0m { useRef, 
+useMemo, useEffect, useState 
+} [36mfrom[0m 
+[32m"react"[0m;
+  [90m6 |[0m 
+[36mimport[0m * 
+[36mas[0m [33mTHREE[0m 
+[36mfrom[0m 
+[32m"three"[0m;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/components/three/Ho
+useModel.tsx [Client 
+Component Browser]
+    ./src/components/three/Ho
+useScene.tsx [Client 
+Component Browser]
+    ./src/components/three/Sc
+rollHouseExperience.tsx 
+[Client Component Browser]
+    ./src/components/three/Sc
+rollHouseExperience.tsx 
+[Server Component]
+    ./src/components/sections
+/ThreeDTeaser.tsx [Server 
+Component]
+    ./src/app/page.tsx 
+[Server Component]
+
+https://nextjs.org/docs/messa
+ges/module-not-found
+
+
+./src/components/three/HouseS
+cene.tsx:3:1
+Error: Module not found: 
+Can't resolve 
+'@react-three/fiber'
+  [90m1 |[0m [32m"use 
+client"[0m;
+  [90m2 |[0m
+[31m[1m>[0m [90m3 |[0m 
+[36mimport[0m { 
+[33mCanvas[0m } 
+[36mfrom[0m [32m"@react-th
+ree/fiber"[0m;
+  [90m  |[0m [31m[1m^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^[0m
+  [90m4 |[0m 
+[36mimport[0m { 
+[33mEnvironment[0m, 
+[33mContactShadows[0m } 
+[36mfrom[0m 
+[32m"@react-three/drei"[0m;
+  [90m5 |[0m 
+[36mimport[0m { 
+[33mSuspense[0m, 
+useEffect, useState } 
+[36mfrom[0m 
+[32m"react"[0m;
+  [90m6 |[0m 
+[36mimport[0m 
+[33mHouseModel[0m 
+[36mfrom[0m 
+[32m"./HouseModel"[0m;
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/components/three/Ho
+useScene.tsx [Client 
+Component Browser]
+    ./src/components/three/Sc
+rollHouseExperience.tsx 
+[Client Component Browser]
+    ./src/components/three/Sc
+rollHouseExperience.tsx 
+[Server Component]
+    ./src/components/sections
+/ThreeDTeaser.tsx [Server 
+Component]
+    ./src/app/page.tsx 
+[Server Component]
+
+https://nextjs.org/docs/messa
+ges/module-not-found
+
+
+./src/components/three/HouseM
+odel.tsx:6:1
+Error: Module not found: 
+Can't resolve 'three'
+  [90m4 |[0m 
+[36mimport[0m { useGLTF, 
+[33mHtml[0m } 
+[36mfrom[0m 
+[32m"@react-three/drei"[0m;
+  [90m5 |[0m 
+[36mimport[0m { useRef, 
+useMemo, useEffect, useState 
+} [36mfrom[0m 
+[32m"react"[0m;
+[31m[1m>[0m [90m6 |[0m 
+[36mimport[0m * 
+[36mas[0m [33mTHREE[0m 
+[36mfrom[0m 
+[32m"three"[0m;
+  [90m  |[0m [31m[1m^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^[0
+m
+  [90m7 |[0m
+  [90m8 |[0m 
+[36mexport[0m 
+[36mdefault[0m 
+[36mfunction[0m 
+[33mHouseModel[0m({
+  [90m9 |[0m     
+scrollProgress,
+
+
+
+Import trace:
+  Client Component Browser:
+    ./src/components/three/Ho
+useModel.tsx [Client 
+Component Browser]
+    ./src/components/three/Ho
+useScene.tsx [Client 
+Component Browser]
+    ./src/components/three/Sc
+rollHouseExperience.tsx 
+[Client Component Browser]
+    ./src/components/three/Sc
+rollHouseExperience.tsx 
+[Server Component]
+    ./src/components/sections
+/ThreeDTeaser.tsx [Server 
+Component]
+    ./src/app/page.tsx 
+[Server Component]
+
+https://nextjs.org/docs/messa
+ges/module-not-found
+
+
+    at <unknown> (./src/compo
+nents/three/HouseModel.tsx:4:
+1)
+    at <unknown> (https://nex
+tjs.org/docs/messages/module-
+not-found)
+    at <unknown> (./src/compo
+nents/three/HouseScene.tsx:4:
+1)
+    at <unknown> (https://nex
+tjs.org/docs/messages/module-
+not-found)
+    at <unknown> (./src/compo
+nents/three/HouseModel.tsx:3:
+1)
+    at <unknown> (https://nex
+tjs.org/docs/messages/module-
+not-found)
+    at <unknown> (./src/compo
+nents/three/HouseScene.tsx:3:
+1)
+    at <unknown> (https://nex
+tjs.org/docs/messages/module-
+not-found)
+    at <unknown> (./src/compo
+nents/three/HouseModel.tsx:6:
+1)
+    at <unknown> (https://nex
+tjs.org/docs/messages/module-
+not-found)

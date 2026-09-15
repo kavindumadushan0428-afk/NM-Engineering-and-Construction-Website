@@ -1,0 +1,75 @@
+
+> nm@0.1.0 lint
+> eslint
+
+
+D:\Web\nm\src\components\layout\Navbar.tsx
+  39:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Web\nm\src\components\layout\Navbar.tsx:39:13
+  37 |     useEffect(() => {
+  38 |         if (isOpen) {
+> 39 |             setIsMounted(true);
+     |             ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  40 |         } else {
+  41 |             const timer = setTimeout(() => setIsMounted(false), 240);
+  42 |             return () => clearTimeout(timer);  react-hooks/set-state-in-effect
+
+D:\Web\nm\src\components\sections\VRTeaser.tsx
+  7:7  warning  'vrIcon' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+D:\Web\nm\src\components\three\HouseModel.tsx
+   5:27  warning  'useEffect' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+  26:24  error    Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+D:\Web\nm\src\components\three\HouseModel.tsx:26:24
+  24 |
+  25 |     useMemo(() => {
+> 26 |         scene.traverse((child) => {
+     |                        ^^^^^^^^^^^^
+> 27 |             if (child.name === "Roof_Main") {
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 28 |                 roofMainRef.current = child;
+     …
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 49 |             }
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 50 |         });
+     | ^^^^^^^^^^ Passing a ref to a function may read its value during render
+  51 |     }, [scene]);
+  52 |
+  53 |     const currentRot = useRef(0);  react-hooks/refs
+  55:11  warning  'currentCamDistance' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+
+D:\Web\nm\src\components\three\HouseScene.tsx
+   9:17  warning  'setDpr' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+  14:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+D:\Web\nm\src\components\three\HouseScene.tsx:14:9
+  12 |     useEffect(() => {
+  13 |         const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+> 14 |         setIsReducedMotion(mediaQuery.matches);
+     |         ^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  15 |         const handleReducedMotion = (e: MediaQueryListEvent) => setIsReducedMotion(e.matches);
+  16 |         mediaQuery.addEventListener("change", handleReducedMotion);
+  17 |         return () => mediaQuery.removeEventListener("change", handleReducedMotion);  react-hooks/set-state-in-effect
+
+D:\Web\nm\src\types\three-elements.d.ts
+  5:19  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+✖ 8 problems (4 errors, 4 warnings)
+
