@@ -21,6 +21,7 @@ export default function Navbar() {
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
 
   useEffect(() => {
@@ -45,7 +46,28 @@ export default function Navbar() {
     };
   }, [open]);
 
-  const close = () => dialog.current?.close();
+  const close = () => {
+    if (!dialog.current || isClosing) return;
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    setIsClosing(true);
+    document.body.style.overflow = "";
+
+    if (prefersReducedMotion) {
+      dialog.current?.close();
+      setOpen(false);
+      setIsClosing(false);
+      return;
+    }
+
+    setTimeout(() => {
+      dialog.current?.close();
+      setOpen(false);
+      setIsClosing(false);
+    }, 240);
+  };
 
   const scrollToTop = () => {
     if (typeof window === "undefined") return;
@@ -66,19 +88,15 @@ export default function Navbar() {
     setServicesOpen(false);
     const isCurrentPage = pathname === href;
 
+    if (open) {
+      close();
+    }
+
     if (isCurrentPage) {
       e.preventDefault();
-      if (open) {
-        close();
-        document.body.style.overflow = "";
-        requestAnimationFrame(() => {
-          scrollToTop();
-        });
-      } else {
+      requestAnimationFrame(() => {
         scrollToTop();
-      }
-    } else if (open) {
-      close();
+      });
     }
   };
 
@@ -203,13 +221,28 @@ export default function Navbar() {
         ref={dialog}
         id="mobile-navigation"
         className="mobile-menu"
+        data-closing={isClosing ? "true" : undefined}
         aria-labelledby="menu-title"
+        onCancel={(e) => {
+          e.preventDefault();
+          close();
+        }}
         onClose={() => {
           setOpen(false);
+          setIsClosing(false);
+          document.body.style.overflow = "";
           trigger.current?.focus();
         }}
         onClick={(e) => {
-          if (e.target === dialog.current) close();
+          if (e.target === dialog.current) {
+            const rect = dialog.current.getBoundingClientRect();
+            const isInDialog =
+              rect.top <= e.clientY &&
+              e.clientY <= rect.top + rect.height &&
+              rect.left <= e.clientX &&
+              e.clientX <= rect.left + rect.width;
+            if (!isInDialog) close();
+          }
         }}
       >
         <div className="mobile-menu-top">
@@ -225,28 +258,28 @@ export default function Navbar() {
             <LuX size={18} strokeWidth={1.75} aria-hidden="true" />
           </button>
         </div>
-        <nav aria-label="Mobile navigation">
-          {[
-            ...links,
-            { href: "/vr-experience", label: "3D & VR experience" },
-          ].map((link, i) => (
+        <nav className="mobile-menu-nav" aria-label="Mobile navigation">
+          {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
+              className="mobile-nav-link"
               aria-current={active(link.href) ? "page" : undefined}
               onClick={(e) => handleNavClick(e, link.href)}
-              style={{ animationDelay: i * 35 + "ms" }}
             >
               <span>{link.label}</span>
+              {active(link.href) && (
+                <span className="mobile-active-dot" aria-hidden="true" />
+              )}
             </Link>
           ))}
         </nav>
         <Link
           href="/contact"
-          className="button primary"
+          className="mobile-menu-cta"
           onClick={(e) => handleNavClick(e, "/contact")}
         >
-          Let’s talk <Arrow diagonal />
+          Let’s talk <Arrow diagonal size={14} />
         </Link>
         <p className="mobile-menu-note">Rambukkana · Kegalle · Sri Lanka</p>
       </dialog>
