@@ -1,33 +1,120 @@
 "use client";
-
-import { Component, ReactNode } from "react";
+import { Component, useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
-
-class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
-    state = { hasError: false };
-    static getDerivedStateFromError() { return { hasError: true }; }
-    render() {
-        if (this.state.hasError) return <div className="flex w-full h-full items-center justify-center text-sm text-neutral-500">3D Experience currently unavailable.</div>;
-        return this.props.children;
-    }
-}
-
-const HouseScene = dynamic(() => import("./HouseScene"), { ssr: false });
-
-export default function ScrollHouseExperience() {
-    return (
-        <div className="relative w-full h-[400px] md:h-[500px] lg:h-[700px] flex items-center justify-center overflow-hidden">
-            <ErrorBoundary>
-                <HouseScene />
-            </ErrorBoundary>
-
-            {/* Instruction overlay */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center justify-center gap-3 px-4 py-2 bg-white/70 backdrop-blur-md rounded-full shadow-sm border border-neutral-100/50 pointer-events-none">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-600">Drag to Explore</span>
-                <svg className="w-4 h-4 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-                </svg>
-            </div>
-        </div>
+import Image from "next/image";
+import Arrow from "@/components/ui/Arrow";
+const HouseScene = dynamic(() => import("./HouseScene"), {
+  ssr: false,
+  loading: () => (
+    <p className="p-8" role="status">
+      Loading the interactive model…
+    </p>
+  ),
+});
+class SceneBoundary extends Component<
+  { children: ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  render() {
+    return this.state.failed ? (
+      <div className="p-8">
+        <p>The interactive model could not load on this device.</p>
+        <a href="/projects" className="text-link">
+          Explore project images <Arrow size={14} />
+        </a>
+      </div>
+    ) : (
+      this.props.children
     );
+  }
+}
+export default function ScrollHouseExperience() {
+  const [active, setActive] = useState(false);
+  const [angle, setAngle] = useState(0);
+  const [version, setVersion] = useState(0);
+  const [roofVisible, setRoofVisible] = useState(true);
+  return (
+    <div className="model-viewer">
+      <div
+        className="model-canvas"
+        role="region"
+        aria-label="Interactive house model"
+        aria-describedby="model-instructions"
+      >
+        {active ? (
+          <SceneBoundary>
+            <HouseScene key={version} angle={angle} roofVisible={roofVisible} />
+          </SceneBoundary>
+        ) : (
+          <>
+            <Image
+              src="/Image/3D/3d-teaser.webp"
+              alt="Architectural house visualization — load the model to explore its exterior"
+              fill
+              sizes="(max-width: 1440px) 100vw, 1344px"
+              className="object-cover"
+            />
+            <div className="model-load">
+              <button
+                type="button"
+                className="button primary"
+                onClick={() => setActive(true)}
+              >
+                Load interactive 3D model
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+      <div className="model-toolbar">
+        <p id="model-instructions">
+          {active
+            ? "Drag to look around, or use the rotation buttons."
+            : "An exterior model preview. Loads only when you choose."}
+        </p>
+        {active && (
+          <div>
+            <button
+              type="button"
+              onClick={() => setAngle((a) => a - Math.PI / 6)}
+              aria-label="Rotate house left"
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              onClick={() => setAngle((a) => a + Math.PI / 6)}
+              aria-label="Rotate house right"
+            >
+              →
+            </button>
+            <button
+              type="button"
+              aria-pressed={!roofVisible}
+              onClick={() => setRoofVisible((v) => !v)}
+            >
+              {roofVisible ? "Explore floor plan" : "Show roof"}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setAngle(0);
+                setRoofVisible(true);
+                setVersion((v) => v + 1);
+              }}
+            >
+              Reset view
+            </button>
+            <button type="button" onClick={() => setActive(false)}>
+              Close model
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }

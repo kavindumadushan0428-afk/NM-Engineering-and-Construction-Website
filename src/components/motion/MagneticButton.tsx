@@ -1,54 +1,58 @@
 "use client";
-
-import { useRef, useState } from "react";
-import { motion, useSpring, useMotionValue } from "framer-motion";
-
-interface MagneticProps {
-    children: React.ReactNode;
-    className?: string;
-    strength?: number;
-}
-
-export default function MagneticButton({ children, className = "", strength = 0.25 }: MagneticProps) {
-    const ref = useRef<HTMLDivElement>(null);
-    const [isHovered, setIsHovered] = useState(false);
-
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    const mouseXSpring = useSpring(x, { stiffness: 350, damping: 25, mass: 0.5 });
-    const mouseYSpring = useSpring(y, { stiffness: 350, damping: 25, mass: 0.5 });
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!ref.current) return;
-        const rect = ref.current.getBoundingClientRect();
-
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-
-        const distanceX = e.clientX - centerX;
-        const distanceY = e.clientY - centerY;
-
-        x.set(distanceX * strength);
-        y.set(distanceY * strength);
-    };
-
-    const handleMouseLeave = () => {
-        setIsHovered(false);
+import { useRef } from "react";
+import {
+  motion,
+  useSpring,
+  useMotionValue,
+  useReducedMotion,
+} from "framer-motion";
+export default function MagneticButton({
+  children,
+  className = "",
+  strength = 0.08,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  strength?: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const sx = useSpring(x, { stiffness: 350, damping: 30 });
+  const sy = useSpring(y, { stiffness: 350, damping: 30 });
+  return (
+    <motion.div
+      ref={ref}
+      className={"w-fit inline-block " + className}
+      style={{ x: reduced ? 0 : sx, y: reduced ? 0 : sy }}
+      onPointerMove={(e) => {
+        if (
+          reduced ||
+          e.pointerType !== "mouse" ||
+          !matchMedia("(pointer:fine)").matches
+        )
+          return;
+        const r = e.currentTarget.getBoundingClientRect();
+        x.set(
+          Math.max(
+            -3,
+            Math.min(3, (e.clientX - r.left - r.width / 2) * strength),
+          ),
+        );
+        y.set(
+          Math.max(
+            -3,
+            Math.min(3, (e.clientY - r.top - r.height / 2) * strength),
+          ),
+        );
+      }}
+      onPointerLeave={() => {
         x.set(0);
         y.set(0);
-    };
-
-    return (
-        <motion.div
-            ref={ref}
-            className={`w-fit inline-block ${className}`}
-            onMouseMove={handleMouseMove}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={handleMouseLeave}
-            style={{ x: mouseXSpring, y: mouseYSpring }}
-        >
-            {children}
-        </motion.div>
-    );
+      }}
+    >
+      {children}
+    </motion.div>
+  );
 }
